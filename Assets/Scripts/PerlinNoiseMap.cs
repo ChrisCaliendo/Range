@@ -13,8 +13,8 @@ public class PerlinNoiseMap : MonoBehaviour
     public GameObject plains;
     public GameObject woods;
 
-    int map_width = 160;
-    int map_height = 160;
+    int map_width = 300;
+    int map_height = 300;
     int mapVBorderSize;
     int mapHBorderSize;
  
@@ -22,14 +22,15 @@ public class PerlinNoiseMap : MonoBehaviour
     List<List<GameObject>> tile_grid = new List<List<GameObject>>();
  
     // recommend 4 to 20
-    float magnification = 15.0f;
+    float magnification = 25.0f;
  
-    int x_offset = 0; // <- +>
+    int x_offset = Unity.Mathematics.Random.; // <- +>
     int y_offset = 0; // v- +^
 
     // Start is called before the first frame update
     void Start()
     {
+        //Random rnd = new Random();
         mapVBorderSize = Convert.ToInt32(map_height/10);
         mapHBorderSize = Convert.ToInt32(map_width/10);
         CreateTileset();
@@ -118,18 +119,62 @@ public class PerlinNoiseMap : MonoBehaviour
 
     private int NormalizeTerrain( int x, int y, int tile_id)
     {
-        if(!WithinBoundary(x, y, (map_height-mapVBorderSize), mapVBorderSize, (map_width-mapHBorderSize), mapHBorderSize))
-            return tile_id;
+
+        if(WithinBoundary(x, y, (map_height-mapVBorderSize), mapVBorderSize, (map_width-mapHBorderSize), mapHBorderSize))
+        {
+
+            if (WithinBoundary(x, y, 270, 165, 140, 30))
+            {
+                if (WithinBoundary(x, y, 255, 180, 125, 45))
+                {
+                    return tile_id;
+                }
+                else if (tile_id > 1) return 1;
+                else return 0;
+            }
+            if (WithinBoundary(x, y, 270, 165, 270, 165))
+            {
+                if (WithinBoundary(x, y, 255, 180, 255, 180))
+                {
+                    return tile_id;
+                }
+                else if (tile_id > 1) return 1;
+                else return 0;
+            }
+            if (WithinBoundary(x, y, 140, 30, 140, 30))
+            {
+                if (WithinBoundary(x, y, 125, 45, 125, 45))
+                {
+                    return tile_id;
+                }
+                else if (tile_id > 1) return 1;
+                else return 0;
+            }
+            if (WithinBoundary(x, y, 140, 30, 270, 165))
+            {
+                if (WithinBoundary(x, y, 125, 45, 255, 180))
+                {
+                    return tile_id;
+                }
+                else if (tile_id > 1) return 1;
+                else return 0;
+            }
+
+            return 0;
+        }
         else return 0;
+        
+        
     }
 
     private bool WithinBoundary(int x, int y, int upperBound, int lowerBound, int rightBound, int leftBound)
     {
-
         if(x<leftBound || y<lowerBound || x>rightBound || y>upperBound)
         {
-            return true;
+            return false;
         }
-        else return false;
+        else return true;
     }
+
+    
 }
