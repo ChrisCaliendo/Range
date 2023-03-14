@@ -22,9 +22,9 @@ public class PerlinNoiseMap : MonoBehaviour
     List<List<GameObject>> tile_grid = new List<List<GameObject>>();
  
     // recommend 4 to 20
-    float magnification = 25.0f;
+    float magnification = 10.0f;
  
-    int x_offset = Unity.Mathematics.Random.; // <- +>
+    int x_offset = 0; // <- +>
     int y_offset = 0; // v- +^
 
     // Start is called before the first frame update
@@ -132,7 +132,7 @@ public class PerlinNoiseMap : MonoBehaviour
                 else if (tile_id > 1) return 1;
                 else return 0;
             }
-            if (WithinBoundary(x, y, 270, 165, 270, 165))
+            else if (WithinBoundary(x, y, 270, 165, 270, 165))
             {
                 if (WithinBoundary(x, y, 255, 180, 255, 180))
                 {
@@ -141,7 +141,7 @@ public class PerlinNoiseMap : MonoBehaviour
                 else if (tile_id > 1) return 1;
                 else return 0;
             }
-            if (WithinBoundary(x, y, 140, 30, 140, 30))
+            else if (WithinBoundary(x, y, 140, 30, 140, 30))
             {
                 if (WithinBoundary(x, y, 125, 45, 125, 45))
                 {
@@ -150,7 +150,7 @@ public class PerlinNoiseMap : MonoBehaviour
                 else if (tile_id > 1) return 1;
                 else return 0;
             }
-            if (WithinBoundary(x, y, 140, 30, 270, 165))
+            else if (WithinBoundary(x, y, 140, 30, 270, 165))
             {
                 if (WithinBoundary(x, y, 125, 45, 255, 180))
                 {
@@ -159,15 +159,47 @@ public class PerlinNoiseMap : MonoBehaviour
                 else if (tile_id > 1) return 1;
                 else return 0;
             }
+            else if(title_id>1)
+            {
+                return 1;
+            } else return 0;
 
-            return 0;
+            
         }
         else return 0;
         
         
     }
 
-    private bool WithinBoundary(int x, int y, int upperBound, int lowerBound, int rightBound, int leftBound)
+    private int FormIsland(int x, int y, int upperBound, int lowerBound, int rightBound, int leftBound, double InlandApex, int levels){
+
+        //Not within island radius
+        if(!WithinBoundary(x, y, upperBound, lowerBound, rightBound, leftBound)) return title_id;
+
+
+        //Check every level of erosion
+        double erosionCoef = ((1-InlandApex)/levels);
+        for(int l = 1; l < levels; l++){
+            double erosion = 1 - (erosionCoef*l);
+            if(!WithinBoundary(x, y, (upperBound*erosion), (lowerBound*erosion), (rightBound*erosion), (leftBound*erosion))) 
+            {
+                return tile_id;
+            }
+        }
+        return title_id;
+
+        if (WithinBoundary(x, y, 140, 30, 270, 165))
+            {
+                if (WithinBoundary(x, y, 125, 45, 255, 180))
+                {
+                    return tile_id;
+                }
+                else if (tile_id > 1) return 1;
+                else return 0;
+            }
+    }
+
+    private bool WithinBoundary(int x, int y, double upperBound, double lowerBound, double rightBound, double leftBound)
     {
         if(x<leftBound || y<lowerBound || x>rightBound || y>upperBound)
         {
