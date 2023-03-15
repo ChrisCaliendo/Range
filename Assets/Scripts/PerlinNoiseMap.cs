@@ -30,13 +30,15 @@ public class PerlinNoiseMap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Random rnd = new Random();
+        //x_offset = UnityEngine.Random.Range(-10000000, 10000000);
+        //y_offset = UnityEngine.Random.Range(-10000000, 10000000);
         mapVBorderSize = Convert.ToInt32(map_height/10);
         mapHBorderSize = Convert.ToInt32(map_width/10);
         CreateTileset();
         CreateTileGroups();
         GenerateMap();
     }
+    
 
     void CreateTileset()
     {
@@ -159,10 +161,7 @@ public class PerlinNoiseMap : MonoBehaviour
                 else if (tile_id > 1) return 1;
                 else return 0;
             }
-            else if(title_id>1)
-            {
-                return 1;
-            } else return 0;
+             else return 0;
 
             
         }
@@ -171,7 +170,8 @@ public class PerlinNoiseMap : MonoBehaviour
         
     }
 
-    private int FormIsland(int x, int y, int upperBound, int lowerBound, int rightBound, int leftBound, double InlandApex, int levels){
+    
+    private int FormIsland(int x, int y, int tile_id , int upperBound, int lowerBound, int rightBound, int leftBound, double InlandApex,  int levels){
 
         //Not within island radius
         if(!WithinBoundary(x, y, upperBound, lowerBound, rightBound, leftBound)) return title_id;
@@ -186,7 +186,7 @@ public class PerlinNoiseMap : MonoBehaviour
                 return tile_id;
             }
         }
-        return title_id;
+        return tile_id;
 
         if (WithinBoundary(x, y, 140, 30, 270, 165))
             {
@@ -198,6 +198,7 @@ public class PerlinNoiseMap : MonoBehaviour
                 else return 0;
             }
     }
+    
 
     private bool WithinBoundary(int x, int y, double upperBound, double lowerBound, double rightBound, double leftBound)
     {
