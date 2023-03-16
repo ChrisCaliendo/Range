@@ -174,7 +174,7 @@ public class PerlinNoiseMap : MonoBehaviour
     private int FormIsland(int x, int y, int tile_id , int upperBound, int lowerBound, int rightBound, int leftBound, double InlandApex,  int levels){
 
         //Not within island radius
-        if(!WithinBoundary(x, y, upperBound, lowerBound, rightBound, leftBound)) return title_id;
+        if(!WithinBoundary(x, y, upperBound, lowerBound, rightBound, leftBound)) return tidwle_id;
 
 
         //Check every level of erosion
