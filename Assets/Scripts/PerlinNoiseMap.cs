@@ -30,8 +30,8 @@ public class PerlinNoiseMap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //x_offset = UnityEngine.Random.Range(-10000000, 10000000);
-        //y_offset = UnityEngine.Random.Range(-10000000, 10000000);
+        x_offset = UnityEngine.Random.Range(-10000000, 10000000);
+        y_offset = UnityEngine.Random.Range(-10000000, 10000000);
         mapVBorderSize = Convert.ToInt32(map_height/10);
         mapHBorderSize = Convert.ToInt32(map_width/10);
         CreateTileset();
@@ -76,7 +76,7 @@ public class PerlinNoiseMap : MonoBehaviour
                 int tile_id = GetIdUsingPerlin(x, y);
 
                 tile_id = NormalizeTerrain(x, y, tile_id);
-
+                
                 noise_grid[x].Add(tile_id);
                 CreateTile(tile_id, x, y);
             }
@@ -174,15 +174,42 @@ public class PerlinNoiseMap : MonoBehaviour
     private int FormIsland(int x, int y, int tile_id , int upperBound, int lowerBound, int rightBound, int leftBound, double InlandApex,  int levels){
 
         //Not within island radius
-        if(!WithinBoundary(x, y, upperBound, lowerBound, rightBound, leftBound)) return tidwle_id;
+        if(!WithinBoundary(x, y, upperBound, lowerBound, rightBound, leftBound)) return tile_id;
 
 
         //Check every level of erosion
-        double erosionCoef = ((1-InlandApex)/levels);
+        double erosionDif = ((1-InlandApex)/levels);
         for(int l = 1; l < levels; l++){
-            double erosion = 1 - (erosionCoef*l);
+            double erosion = 1 - (erosionDif*l);
             if(!WithinBoundary(x, y, (upperBound*erosion), (lowerBound*erosion), (rightBound*erosion), (leftBound*erosion))) 
             {
+                switch(l)
+                {
+                    case 1://Coast Water
+                        if(l==1){
+
+                        }
+                        break;
+                    case 2://Shoreline
+                        if(l==2){
+
+                        }
+                        break;
+                    case 3://Inland
+                        if(l==3){
+
+                        }
+                        break;
+                    case 4://Highland
+                        if(l==4){
+
+                        }
+                        break;
+                    default:
+                        return 0;
+
+                }
+
                 return tile_id;
             }
         }
