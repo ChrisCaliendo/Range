@@ -15,8 +15,8 @@ public class PerlinNoiseMap : MonoBehaviour
     public GameObject plains;
     public GameObject woods;
 
-    int map_width = 150;
-    int map_height = 150;
+    int map_width = 300;
+    int map_height = 300;
     int mapVBorderSize;
     int mapHBorderSize;
     int biome_id;
