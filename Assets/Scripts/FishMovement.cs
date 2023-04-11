@@ -5,11 +5,18 @@ using UnityEngine;
 public class FishMovement : MonoBehaviour
 {
 
-    float score = 50;
+    private FishingMinigame minigame;
+
+
+    public void setParentMinigame(GameObject parent)
+    {
+        minigame = parent.GetComponent<FishingMinigame>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -19,9 +26,9 @@ public class FishMovement : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("ff"); 
+        minigame.catchingInProgress(); 
     }
     private void OnTriggerExit2D(Collider2D other) {
-        Debug.Log("gg"); 
+        minigame.catchingDelayed();
     }
 }
