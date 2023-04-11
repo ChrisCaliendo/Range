@@ -11,6 +11,7 @@ public class Movement : MonoBehaviour
     private Animator animator;
     public Tilemap tilemap;
     public TileBase[] waterTiles;
+    public TileBase[] landTiles;
     //public TileBase defaultTile;
     public float movementSpeed;
     private Vector2 movementInput;
@@ -18,21 +19,29 @@ public class Movement : MonoBehaviour
     private float HorizontalDir;
     private float VerticalDir;
     private bool OnWater;
+    private bool OnLand;
     private bool stopMoving;
     public float waterSpeed;
+    public GameObject spawnpoint;
     //private Vector2 lastMovementInput; // to store the last movement input
+    private Vector2 previousPositionOnLand;
 
     private void Awake()
     {
-
         rigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        spawnpoint = Instantiate(spawnpoint);
+        OnLand = true;
+    }
+
+    private void FixedUpdate(){
+        CheckTile();
+        EnsureSpawn();
     }
 
     private void Update()
     {
         if(!stopMoving){
-            CheckTile();
             Move();
             Animate();
         } 
@@ -91,7 +100,20 @@ public class Movement : MonoBehaviour
             }
         }
         OnWater = foundTile;
+
     }
+
+
+    void EnsureSpawn(){
+        if(OnWater==false&&OnLand==false){
+            Destroy(spawnpoint);
+            spawnpoint = Instantiate(spawnpoint, transform.position);
+            OnLand = true;
+        } 
+        else if(OnWater==true&&OnLand==true) OnLand = false;
+    }
+
+
     public Boolean CanFish()
     {
         if(OnWater)
