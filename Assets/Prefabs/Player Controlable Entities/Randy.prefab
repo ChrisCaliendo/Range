@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1534789767279992698}
   - component: {fileID: 1534789767279992701}
   - component: {fileID: 1534789767279992699}
+  - component: {fileID: 5912393894719854584}
   - component: {fileID: 1534789767279992696}
   - component: {fileID: 1534789767279992697}
   m_Layer: 0
@@ -100,7 +101,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fdd74accf46260418c0b2d8c3b743dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tilemap: {fileID: 0}
+  waterTiles: []
   movementSpeed: 150
+  waterSpeed: 0
+--- !u!114 &5912393894719854584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534789767279992700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c76a3b55f02880d479a23cdcaedacd47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishingScene: {fileID: 0}
+  move: {fileID: 1534789767279992699}
 --- !u!50 &1534789767279992696
 Rigidbody2D:
   serializedVersion: 4

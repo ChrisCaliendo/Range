@@ -18,6 +18,7 @@ public class Movement : MonoBehaviour
     private float HorizontalDir;
     private float VerticalDir;
     private bool OnWater;
+    private bool stopMoving;
     public float waterSpeed;
     //private Vector2 lastMovementInput; // to store the last movement input
 
@@ -30,12 +31,14 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        CheckTile();
-        Move();
-        Animate();
+        if(!stopMoving){
+            CheckTile();
+            Move();
+            Animate();
+        } 
     }
 
-    private void Move()
+    public void Move()
     {
         float Horizontal = Input.GetAxisRaw("Horizontal");
         float Vertical = Input.GetAxisRaw("Vertical");
@@ -72,7 +75,7 @@ public class Movement : MonoBehaviour
         animator.SetFloat("Speed", rigidbody2D.velocity.magnitude);
         animator.SetBool("PlayerInWater?", OnWater);
     }
-    void CheckTile()
+    public void CheckTile()
     {
         Vector3Int playerPosition = tilemap.WorldToCell(transform.position);
 
@@ -89,4 +92,19 @@ public class Movement : MonoBehaviour
         }
         OnWater = foundTile;
     }
+    public Boolean CanFish()
+    {
+        if(OnWater)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void stopMovement(bool x){
+        stopMoving = x;
+    } 
 }
