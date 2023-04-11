@@ -26,17 +26,19 @@ public class FishingMinigame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameCatch.GetComponent<FishMovement>().setParentMinigame(gameObject);
+        gameCatch.GetComponent<FishMovement>().AssignMinigame(gameObject.GetComponent<FishingMinigame>());
         player.GetComponent<Movement>().stopMovement(true);
         hook = Instantiate(hook, playerSpawn.position, playerSpawn.rotation);
         gameCatch = Instantiate(gameCatch, catchSpawn.position, catchSpawn.rotation);
         score = 0.80f;
         progressBar.fillAmount = score;
         judgementRenderer = judgementIcon.GetComponent<SpriteRenderer>();
-        badColor = new Color(226, 68, 68);
-        midColor = new Color(215, 113, 77);
-        okColor = new Color(255, 222, 117);
-        goodColor = new Color(116, 208, 113);
+        badColor = new Color32(226, 68, 68, 255);
+        midColor = new Color32(215, 113, 77, 255);
+        okColor = new Color32(255, 222, 117, 255);
+        goodColor = new Color32(116, 208, 113, 255);
+        //gameObject.GetComponent<SpriteRenderer>().material.color = new Color32(255, 255, 255, 255);
+        //progressBar.color = okColor;
         playerCatching = false;
         //endMinigame();
     }
@@ -62,17 +64,17 @@ public class FishingMinigame : MonoBehaviour
     void UpdateUI()
     {
         progressBar.fillAmount = score;
-        if (score>=75)
+        if (score>=0.75)
         {
             judgementRenderer.sprite = thumbs[3];
             progressBar.color = goodColor;
         }
-        else if(score >= 50)
+        else if(score >= 0.50)
         {
             judgementRenderer.sprite = thumbs[2];
             progressBar.color = okColor;
         }
-        else if(score >= 25)
+        else if(score >= 0.25)
         {
             judgementRenderer.sprite = thumbs[1];
             progressBar.color = midColor;
@@ -87,7 +89,7 @@ public class FishingMinigame : MonoBehaviour
 
     void CheckEndGameConditions()
     {
-        if (score >= 100)
+        if (score >= 1)
         {
             endMinigame();
         }

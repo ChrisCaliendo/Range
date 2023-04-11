@@ -107,7 +107,7 @@ public class Movement : MonoBehaviour
     void EnsureSpawn(){
         if(OnWater==false&&OnLand==false){
             Destroy(spawnpoint);
-            spawnpoint = Instantiate(spawnpoint, transform.position);
+            spawnpoint = Instantiate(spawnpoint, transform.position, transform.rotation);
             OnLand = true;
         } 
         else if(OnWater==true&&OnLand==true) OnLand = false;

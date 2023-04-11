@@ -5,13 +5,7 @@ using UnityEngine;
 public class FishMovement : MonoBehaviour
 {
 
-    private FishingMinigame minigame;
-
-
-    public void setParentMinigame(GameObject parent)
-    {
-        minigame = parent.GetComponent<FishingMinigame>();
-    }
+    public FishingMinigame minigame;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +19,10 @@ public class FishMovement : MonoBehaviour
         
     }
 
+    public void AssignMinigame(FishingMinigame parent)
+    {
+        minigame = parent;
+    }
     private void OnTriggerEnter2D(Collider2D other) {
         minigame.catchingInProgress(); 
     }
