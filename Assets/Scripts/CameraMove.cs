@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    public GameObject player;
-    float mainSpeed = 100.0f; //regular speed
-    //private Vector3 lastMouse = new Vector3(255, 255, 255); //kind of in the middle of the screen, rather than at the top (play)
-    private float totalRun= 1.0f;
-     
-    private void FixedUpdate() 
+    public Transform target;
+    public Vector3 offset;
+    public float smoothTime = 0.0f; //If you want to have the camera slightly trail behind I suggest 0.3f
+
+    private Vector3 velocity = Vector3.zero;
+
+    void LateUpdate()
     {
-        Vector3 x = transform.position;
-        int y = x.x;
+        if (target != null)
+        {
+            Vector3 targetPosition = target.position + offset;
+            targetPosition.z = transform.position.z;
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+        }
     }
 }
