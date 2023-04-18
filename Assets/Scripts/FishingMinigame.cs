@@ -8,6 +8,7 @@ public class FishingMinigame : MonoBehaviour
     public GameObject player;
     public Transform playerSpawn;
     public Transform catchSpawn;
+    public Transform lineOrigin;
     public GameObject hook;
     public GameObject gameCatch;
     public Image progressBar;
@@ -27,6 +28,8 @@ public class FishingMinigame : MonoBehaviour
     void Start()
     {
         gameCatch.GetComponent<FishMovement>().AssignMinigame(gameObject.GetComponent<FishingMinigame>());
+
+        hook.GetComponent<HookMovement>().setLineOrigin(lineOrigin.position);
         player.GetComponent<Movement>().stopMovement(true);
         hook = Instantiate(hook, playerSpawn.position, playerSpawn.rotation);
         gameCatch = Instantiate(gameCatch, catchSpawn.position, catchSpawn.rotation);
