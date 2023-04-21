@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-
+    private Transform player;
     private Rigidbody2D rigidbody2D;
     private Animator animator;
     public Tilemap tilemap;
@@ -29,6 +29,7 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
+        player = GetComponent<Transform>();
         rigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spawnpoint = Instantiate(spawnpoint);
@@ -134,12 +135,17 @@ public class Movement : MonoBehaviour
         if(Drowning){
             stopMoving = true;
             animator.SetBool("PlayerInWater?", Drowning);
-            yield WaitForSeconds(2);
-            GameObject.transform.position = spawnpoint.position;
+            StartCoroutine(WaitTime());
+            player.position = spawnpoint.transform.position;
             Drowning = false;
             animator.SetBool("PlayerInWater?", Drowning);
             stopMoving = false;
         }
+    }
+
+    IEnumerator WaitTime()
+    {
+        yield return new WaitForSeconds(3.0f);
     }
 
 
