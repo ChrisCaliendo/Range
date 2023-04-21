@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour
     private Animator animator;
     public Tilemap tilemap;
     public TileBase[] waterTiles;
-    public TileBase[] landTiles;
+    public TileBase[] drownTiles;
     //public TileBase defaultTile;
     public float movementSpeed;
     private Vector2 movementInput;
@@ -20,6 +20,7 @@ public class Movement : MonoBehaviour
     private float VerticalDir;
     private bool OnWater;
     private bool OnLand;
+    private bool Drowning;
     private bool stopMoving;
     public float waterSpeed;
     public GameObject spawnpoint;
@@ -35,7 +36,8 @@ public class Movement : MonoBehaviour
     }
 
     private void FixedUpdate(){
-        CheckTile();
+        CheckTileForWater();
+        CheckIfDrowning();
         EnsureSpawn();
     }
 
@@ -45,6 +47,7 @@ public class Movement : MonoBehaviour
             Move();
             Animate();
         } 
+        
     }
 
     public void Move()
@@ -84,12 +87,10 @@ public class Movement : MonoBehaviour
         animator.SetFloat("Speed", rigidbody2D.velocity.magnitude);
         animator.SetBool("PlayerInWater?", OnWater);
     }
-    public void CheckTile()
-    {
-        Vector3Int playerPosition = tilemap.WorldToCell(transform.position);
 
-        // Get the tile at the player's position
-        TileBase currentTile = tilemap.GetTile(playerPosition);
+    public void CheckTileForWater()
+    {
+        TileBase currentTile = CheckTile(transform.position);
         bool foundTile = false;
         for (int i = 0; i < waterTiles.Length; i++)
         {
@@ -100,7 +101,23 @@ public class Movement : MonoBehaviour
             }
         }
         OnWater = foundTile;
+        foundTile = false;
+        for (int i = 0; i < drownTiles.Length; i++)
+        {
+            if (currentTile.name == drownTiles[i].name)
+            {
+                foundTile = true;
+                break;
+            }
+        }
+        Drowning = foundTile;
 
+    }
+
+    public TileBase CheckTile(Vector3 tilePos){
+        Vector3Int playerPosition = tilemap.WorldToCell(tilePos);
+        // Get the tile at the player's position
+        return tilemap.GetTile(playerPosition);
     }
 
 
@@ -113,17 +130,22 @@ public class Movement : MonoBehaviour
         else if(OnWater==true&&OnLand==true) OnLand = false;
     }
 
+    void CheckIfDrowning(){
+        if(Drowning){
+            stopMoving = true;
+            animator.SetBool("PlayerInWater?", Drowning);
+            yield WaitForSeconds(2);
+            GameObject.transform.position = spawnpoint.position;
+            Drowning = false;
+            animator.SetBool("PlayerInWater?", Drowning);
+            stopMoving = false;
+        }
+    }
+
 
     public Boolean CanFish()
     {
-        if(OnWater)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return !OnWater;
     }
 
     public void stopMovement(bool x){
