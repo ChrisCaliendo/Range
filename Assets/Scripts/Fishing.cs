@@ -17,18 +17,17 @@ public class Fishing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Fish();
+    }
+
+    async void Fish(){
         if(move.CanFish())
         {
-            if (Input.GetKeyDown(KeyCode.Z))
+            if (Input.GetKeyDown(KeyCode.F))
             {
-                fishingScene.SetActive(true);
-                Console.Write("works");
-            }
-            if (Input.GetKeyDown(KeyCode.X))
-            {
-                fishingScene.SetActive(false);
-                Console.Write("also works");
+                //move.stopMovement(true);
+                fishingScene.GetComponent<FishingMinigame>().player = gameObject;
+                Instantiate(fishingScene, transform.position, transform.rotation);
             }
         }
     }

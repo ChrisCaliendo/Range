@@ -21,9 +21,11 @@ public class Movement : MonoBehaviour
     private bool OnWater;
     private bool OnLand;
     private bool Drowning;
+    private bool Waiting;
     private bool stopMoving;
     public float waterSpeed;
     public GameObject spawnpoint;
+    public GameObject fishingSpot;
     //private Vector2 lastMovementInput; // to store the last movement input
     private Vector2 previousPositionOnLand;
 
@@ -47,7 +49,11 @@ public class Movement : MonoBehaviour
         if(!stopMoving){
             Move();
             Animate();
-        } 
+        }
+        else
+        {
+            rigidbody2D.velocity = new Vector2(0, 0);
+        }
         
     }
 
@@ -68,8 +74,10 @@ public class Movement : MonoBehaviour
             if (OnWater) currentSpeed = waterSpeed;
             else currentSpeed = movementSpeed;
             rigidbody2D.velocity = movementInput * currentSpeed * Time.fixedDeltaTime;
+            //ishingSpot.transform.position.x *= (Horizontal/(Mathf.Abs(Horizontal)));
             //lastMovementInput = movementInput; // store the last movement input
         }
+        
         
     }
 
@@ -131,21 +139,20 @@ public class Movement : MonoBehaviour
         else if(OnWater==true&&OnLand==true) OnLand = false;
     }
 
-    void CheckIfDrowning(){
+    public async void CheckIfDrowning(){
         if(Drowning){
             stopMoving = true;
-            animator.SetBool("PlayerInWater?", Drowning);
-            StartCoroutine(WaitTime());
-            player.position = spawnpoint.transform.position;
-            Drowning = false;
-            animator.SetBool("PlayerInWater?", Drowning);
-            stopMoving = false;
+            animator.SetBool("Drown?", Drowning);
+            Invoke("Respawn", 3);
         }
     }
 
-    IEnumerator WaitTime()
+    void Respawn()
     {
-        yield return new WaitForSeconds(3.0f);
+        player.position = spawnpoint.transform.position;
+        Drowning = false;
+        animator.SetBool("Drown?", Drowning);
+        stopMoving = false;
     }
 
 
