@@ -33,9 +33,11 @@ public class Fishing : MonoBehaviour
     async void Fish(){
         if(move.CanFish()&&FishSpotOnWater&&!inMinigame)
         {
-            inMinigame = true;
-            if (Input.GetKeyDown(KeyCode.F) && FishSpotOnWater)
+            Debug.Log("Can Fish: " + move.CanFish() + "In Minigame: " + inMinigame);
+            
+            if (Input.GetKeyDown(KeyCode.F))
             {
+                inMinigame = true;    
                //move.stopMovement(true);
                 fishingScene.GetComponent<FishingMinigame>().player = gameObject;
                 Instantiate(fishingScene, transform.position, transform.rotation);
