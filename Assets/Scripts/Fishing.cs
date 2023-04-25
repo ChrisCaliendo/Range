@@ -35,7 +35,6 @@ public class Fishing : MonoBehaviour
                 if (fishingSpotTile.name == move.waterTiles[i].name)
                 {
                     foundTile = true;
-                    Debug.Log("True!");
                     break;
                 }
             }
