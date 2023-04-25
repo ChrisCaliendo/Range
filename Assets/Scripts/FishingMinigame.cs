@@ -11,6 +11,7 @@ public class FishingMinigame : MonoBehaviour
     public Transform lineOrigin;
     public GameObject hook;
     public GameObject gameCatch;
+    public GameObject fishPath;
     public Image progressBar;
     public GameObject judgementIcon;
     public Sprite[] thumbs;
@@ -27,8 +28,11 @@ public class FishingMinigame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        fishPath = Instantiate(fishPath, transform.position, fishPath.transform.rotation);
+        for (int i = 0; i <fishPath.transform.childCount; i++)
+            gameCatch.GetComponent<FishMovement>().routes[i] = fishPath.transform.GetChild(i).transform;
         gameCatch.GetComponent<FishMovement>().AssignMinigame(gameObject.GetComponent<FishingMinigame>());
-
+        
         hook.GetComponent<HookMovement>().setLineOrigin(lineOrigin.position);
         player.GetComponent<Movement>().stopMovement(true);
         hook = Instantiate(hook, playerSpawn.position, playerSpawn.rotation);
@@ -84,7 +88,7 @@ public class FishingMinigame : MonoBehaviour
         }
         else
         {
-            judgementRenderer.sprite = thumbs[0];
+            //judgementRenderer.sprite = thumbs[0];
             progressBar.color = badColor;
         }
 
@@ -106,6 +110,8 @@ public class FishingMinigame : MonoBehaviour
     {
         Destroy(hook);
         Destroy(gameCatch);
+        Destroy(fishPath);
+        player.GetComponent<Fishing>().confirmEndMinigame();
         player.GetComponent<Movement>().stopMovement(false);
         Destroy(gameObject);
     }

@@ -1023,6 +1023,7 @@ MonoBehaviour:
   lineOrigin: {fileID: 6853202996436975952}
   hook: {fileID: 7219957661392150475, guid: af1b8fcc1c3884d43a28314111286de0, type: 3}
   gameCatch: {fileID: 6566053218239537489, guid: c44dce30e51e981488efe98dd18aa20b, type: 3}
+  fishPath: {fileID: 8472201610817586530, guid: d8507753547076344817ee33faada2ed, type: 3}
   progressBar: {fileID: 6396985129885425310}
   judgementIcon: {fileID: 8111235770116151856}
   thumbs:

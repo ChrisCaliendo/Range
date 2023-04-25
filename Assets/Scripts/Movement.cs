@@ -23,6 +23,7 @@ public class Movement : MonoBehaviour
     private bool Drowning;
     private bool Waiting;
     private bool stopMoving;
+    private FishingSpotMovement fsm;
     public float waterSpeed;
     public GameObject spawnpoint;
     public GameObject fishingSpot;
@@ -31,6 +32,7 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
+        fsm = fishingSpot.GetComponent<FishingSpotMovement>();
         player = GetComponent<Transform>();
         rigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -69,6 +71,9 @@ public class Movement : MonoBehaviour
         }
         else
         {
+            Vector2 newScale = fishingSpot.transform.localPosition;
+            newScale.x *= Mathf.Sign(Horizontal);
+            fishingSpot.transform.localPosition = newScale;
             float currentSpeed;
             movementInput = new Vector2(Horizontal, Vertical).normalized;
             if (OnWater) currentSpeed = waterSpeed;

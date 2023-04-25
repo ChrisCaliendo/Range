@@ -98,6 +98,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 252b931346c68e642b1b9f2c2bf40c37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minigame: {fileID: 0}
+  routes:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!61 &5549648778485542199
 BoxCollider2D:
   m_ObjectHideFlags: 0
