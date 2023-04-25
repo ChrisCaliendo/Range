@@ -8,6 +8,7 @@ public class FishingSpotMovement : MonoBehaviour
     public Transform player;
     private Vector3 previousPosition;
     private Vector3 currentPosition;
+    private Vector3 fishingSpotCurrentPosition;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,42 +22,50 @@ public class FishingSpotMovement : MonoBehaviour
         if (currentPosition.x > previousPosition.x && currentPosition.y > previousPosition.y)
         {
             transform.localPosition = new Vector3(1, 1, 0);
+            fishingSpotCurrentPosition.Set(currentPosition.x + 1.0f, currentPosition.y + 1.0f, currentPosition.z);
         }
         else if (currentPosition.x > previousPosition.x && currentPosition.y < previousPosition.y)
         {
             transform.localPosition = new Vector3(1, -1, 0);
+            fishingSpotCurrentPosition.Set(currentPosition.x + 1.0f, currentPosition.y - 1.0f, currentPosition.z);
         }
         else if (currentPosition.x < previousPosition.x && currentPosition.y > previousPosition.y)
         {
             transform.localPosition = new Vector3(-1, 1, 0);
+            fishingSpotCurrentPosition.Set(currentPosition.x - 1.0f, currentPosition.y + 1.0f, currentPosition.z);
         }
         else if (currentPosition.x < previousPosition.x && currentPosition.y < previousPosition.y)
         {
             transform.localPosition = new Vector3(-1, -1, 0);
+            fishingSpotCurrentPosition.Set(currentPosition.x - 1.0f, currentPosition.y - 1.0f, currentPosition.z);
         }
         else if (currentPosition.x > previousPosition.x)
         {
             transform.localPosition = new Vector3(1, 0, 0);
+            fishingSpotCurrentPosition.Set(currentPosition.x + 1.0f, currentPosition.y, currentPosition.z);
         }
         else if (currentPosition.x < previousPosition.x)
         {
             transform.localPosition = new Vector3(-1, 0, 0);
+            fishingSpotCurrentPosition.Set(currentPosition.x - 1.0f, currentPosition.y, currentPosition.z);
         }
         else if (currentPosition.y > previousPosition.y)
         {
             transform.localPosition = new Vector3(0, 1, 0);
+            fishingSpotCurrentPosition.Set(currentPosition.x, currentPosition.y + 1.0f, currentPosition.z);
         }
         else if (currentPosition.y < previousPosition.y)
         {
             transform.localPosition = new Vector3(0, -1, 0);
+            fishingSpotCurrentPosition.Set(currentPosition.x, currentPosition.y - 1.0f, currentPosition.z);
         }         
 
         previousPosition = currentPosition;
     }
 
-    public Vector3 getCurrentPosition()
+    public Vector3 getFishingSpotCurrentPosition()
     {
-        return currentPosition;
+        return fishingSpotCurrentPosition;
     }
 }
     
