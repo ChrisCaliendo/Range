@@ -71,9 +71,13 @@ public class Movement : MonoBehaviour
         }
         else
         {
+            
             Vector2 newScale = fishingSpot.transform.localPosition;
-            newScale.x *= Mathf.Sign(Horizontal);
-            fishingSpot.transform.localPosition = newScale;
+            if (Mathf.Sign(Horizontal)!= Mathf.Sign(newScale.x))
+            {
+                newScale.x *= -1;
+                fishingSpot.transform.localPosition = newScale;
+            }
             float currentSpeed;
             movementInput = new Vector2(Horizontal, Vertical).normalized;
             if (OnWater) currentSpeed = waterSpeed;
@@ -105,17 +109,9 @@ public class Movement : MonoBehaviour
     public void CheckTileForWater()
     {
         TileBase currentTile = CheckTile(transform.position);
+        OnWater = onWaterTile(currentTile);
+
         bool foundTile = false;
-        for (int i = 0; i < waterTiles.Length; i++)
-        {
-            if (currentTile.name == waterTiles[i].name)
-            {
-                foundTile = true;
-                break;
-            }
-        }
-        OnWater = foundTile;
-        foundTile = false;
         for (int i = 0; i < drownTiles.Length; i++)
         {
             if (currentTile.name == drownTiles[i].name)
@@ -126,6 +122,21 @@ public class Movement : MonoBehaviour
         }
         Drowning = foundTile;
 
+    }
+
+    public bool onWaterTile(TileBase currentTile)
+    {
+        bool foundTile = false;
+        for (int i = 0; i < waterTiles.Length; i++)
+        {
+
+            if (currentTile.name == waterTiles[i].name)
+            {
+                foundTile = true;
+                break;
+            }
+        }
+        return foundTile;
     }
 
     public TileBase CheckTile(Vector3 tilePos){

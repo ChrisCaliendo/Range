@@ -18,6 +18,7 @@ public class Fishing : MonoBehaviour
 
     void Start()
     {
+        inMinigame = false;
         tileChecker = move.tilemap;
         move = FindObjectOfType<Movement>();
     }
@@ -45,17 +46,7 @@ public class Fishing : MonoBehaviour
     void CheckFishingSpot()
     {
         TileBase fishingSpotTile = move.tilemap.GetTile(move.tilemap.WorldToCell(fishingSpot.transform.position));
-        bool foundTile = false;
-        for (int i = 0; i < move.waterTiles.Length; i++)
-        {
-            if (fishingSpotTile.name == move.waterTiles[i].name)
-            {
-                foundTile = true;
-                //Debug.Log("True!");
-                break;
-            }
-        }
-        FishSpotOnWater = foundTile;
+        FishSpotOnWater = move.onWaterTile(fishingSpotTile);
         //foundTile = false;
     }
 

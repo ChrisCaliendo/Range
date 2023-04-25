@@ -34,9 +34,9 @@ public class HookMovement : MonoBehaviour
 
     void DrawLine()
     {
-        fishingLine.SetPosition(0, linePoint.transform.position);
-        
+        fishingLine.SetPosition(0, linePoint.transform.position); 
     }
+
     void Movement()
     {
         float Horizontal = Input.GetAxisRaw("Horizontal");
