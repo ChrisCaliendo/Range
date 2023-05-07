@@ -15,6 +15,7 @@ public class Fishing : MonoBehaviour
     private Tilemap tileChecker;
     private bool FishSpotOnWater;
     private bool inMinigame;
+    private Transform player;
 
     void Start()
     {
@@ -33,8 +34,6 @@ public class Fishing : MonoBehaviour
     async void Fish(){
         if(move.CanFish()&&FishSpotOnWater&&!inMinigame)
         {
-            Debug.Log("Can Fish: " + move.CanFish() + "In Minigame: " + inMinigame);
-            
             if (Input.GetKeyDown(KeyCode.F))
             {
                 inMinigame = true;    

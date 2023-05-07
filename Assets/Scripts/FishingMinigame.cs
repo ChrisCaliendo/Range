@@ -30,7 +30,9 @@ public class FishingMinigame : MonoBehaviour
     {
         fishPath = Instantiate(fishPath, transform.position, fishPath.transform.rotation);
         for (int i = 0; i <fishPath.transform.childCount; i++)
+        {
             gameCatch.GetComponent<FishMovement>().routes[i] = fishPath.transform.GetChild(i).transform;
+        }
         gameCatch.GetComponent<FishMovement>().AssignMinigame(gameObject.GetComponent<FishingMinigame>());
         
         hook.GetComponent<HookMovement>().setLineOrigin(lineOrigin.position);
@@ -98,6 +100,7 @@ public class FishingMinigame : MonoBehaviour
     {
         if (score >= 1)
         {
+            PlayerScore.instance.addPoints();
             endMinigame();
         }
         else if (score<=0)
