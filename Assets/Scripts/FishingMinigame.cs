@@ -102,9 +102,33 @@ public class FishingMinigame : MonoBehaviour
         {
             PlayerScore.instance.addPoints();
             endMinigame();
+            AudioClip winningSound = Resources.Load<AudioClip>("Audio/Successful_Catch");
+            if (winningSound != null)
+            {
+                GameObject soundObject = new GameObject("WinningSound");
+                AudioSource audioSource = soundObject.AddComponent<AudioSource>();
+                audioSource.PlayOneShot(winningSound);
+                Destroy(soundObject, winningSound.length);
+            }
+            else
+            {
+                Debug.LogError("Failed to load audio clip: Assets/Audio/Successful_Catch.wav");
+            }
         }
         else if (score<=0)
         {
+            AudioClip losingSound = Resources.Load<AudioClip>("Audio/Failed_Catch");
+            if (losingSound != null)
+            {
+                GameObject soundObject = new GameObject("LosingSound");
+                AudioSource audioSource = soundObject.AddComponent<AudioSource>();
+                audioSource.PlayOneShot(losingSound);
+                Destroy(soundObject, losingSound.length);
+            }
+            else
+            {
+                Debug.LogError("Failed to load audio clip: Assets/Audio/Failed_Catch.wav");
+            }
             endMinigame();
         }
     }
