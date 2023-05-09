@@ -52,6 +52,7 @@ public class MusicManager : MonoBehaviour
             {
                 instance.source.Stop();
                 instance.source.clip = instance.menuMusic;
+                instance.source.loop = true;
                 instance.source.Play();
             }
             else 
@@ -69,6 +70,7 @@ public class MusicManager : MonoBehaviour
             {
                 instance.source.Stop();
                 instance.source.clip = instance.gameMusic;
+                instance.source.loop = true;
                 instance.source.Play();
             }
          } 
